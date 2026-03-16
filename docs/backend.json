@@ -1,0 +1,57 @@
+
+{
+  "entities": {
+    "Contestant": {
+      "title": "Contestant",
+      "type": "object",
+      "description": "Represents a martial artist participating in a kumite match.",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "clubAffiliation": { "type": "string" },
+        "nationality": { "type": "string" }
+      },
+      "required": ["id", "name"]
+    },
+    "KumiteMatch": {
+      "title": "KumiteMatch",
+      "type": "object",
+      "description": "Represents a single kumite match state.",
+      "properties": {
+        "id": { "type": "string" },
+        "matchDate": { "type": "string", "format": "date-time" },
+        "scoreA": { "type": "number" },
+        "scoreB": { "type": "number" },
+        "status": { "type": "string" }
+      }
+    },
+    "AppStatus": {
+      "title": "AppStatus",
+      "type": "object",
+      "description": "Global application status for maintenance mode.",
+      "properties": {
+        "isMaintenance": {
+          "type": "boolean",
+          "description": "Whether the app is currently in maintenance mode."
+        }
+      }
+    }
+  },
+  "auth": {
+    "providers": ["password", "anonymous"]
+  },
+  "firestore": {
+    "/settings/app_status": {
+      "schema": { "$ref": "#/backend/entities/AppStatus" },
+      "description": "Global settings for the application status."
+    },
+    "/contestants/{contestantId}": {
+      "schema": { "$ref": "#/backend/entities/Contestant" },
+      "description": "Collection for all martial artist contestants."
+    },
+    "/kumiteMatches/{matchId}": {
+      "schema": { "$ref": "#/backend/entities/KumiteMatch" },
+      "description": "Collection for all kumite matches."
+    }
+  }
+}

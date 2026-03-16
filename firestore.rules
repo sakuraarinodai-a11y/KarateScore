@@ -1,0 +1,18 @@
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /settings/app_status {
+      allow read: if true;
+      allow write: if false; // Only manageable via Admin Console (or Firebase Console)
+    }
+    match /contestants/{contestantId} {
+      allow read: if request.auth != null;
+      allow write: if false; // Temporary lockdown for high-end dev
+    }
+    match /kumiteMatches/{matchId} {
+      allow read: if request.auth != null;
+      allow write: if false;
+    }
+  }
+}
